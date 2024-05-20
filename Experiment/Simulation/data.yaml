@@ -1,0 +1,9 @@
+# 2024-01-02
+path: /root/workspace/20231228/data
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: negative
+  1: positive

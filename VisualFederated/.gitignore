@@ -1,0 +1,13 @@
+# misc
+*nohup.out
+FedV/logs
+FedV/data
+*__pycache__
+FedV/test_clients/*.json
+*.zip
+*.ttf
+./misc
+
+# model file, only used when building image
+*.pt
+*.pth

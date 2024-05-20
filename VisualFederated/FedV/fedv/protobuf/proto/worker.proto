@@ -1,0 +1,46 @@
+syntax = 'proto3';
+
+package FedV;
+
+service FedWorker{
+    rpc TaskResourceRequire(Resource.REQ) returns (Resource.REP) {}
+    rpc TaskSubmit(TaskSubmit.REQ) returns (TaskSubmit.REP) {}
+}
+
+message Resource {
+    enum Status {
+        UNKNOWN = 0;
+        SUCCESS = 1;
+        FAILED = 2;
+    }
+
+    message REQ {
+        int32 num_endpoints = 1;
+    }
+    message REP {
+        Status status = 1;
+        repeated string endpoints = 2;
+    }
+}
+
+message Task {
+    string job_id = 1;
+    string task_id = 2;
+    string web_task_id = 3;
+    string task_type = 4;
+    string task = 5;
+}
+
+message TaskSubmit {
+    enum Status {
+        UNKNOWN = 0;
+        SUCCESS = 1;
+        FAILED = 2;
+    }
+    message REQ {
+        Task task_submit = 1;
+    }
+    message REP {
+        Status status = 1;
+    }
+}

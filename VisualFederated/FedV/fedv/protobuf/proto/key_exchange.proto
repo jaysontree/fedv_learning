@@ -1,0 +1,39 @@
+syntax = 'proto3';
+
+package FedV;
+
+service KeyExchanger{
+    rpc QueryPubKey(NodeId) returns (PubKey) {}
+    rpc PutPubKey(stream PubKey) returns (KeyInfo) {}
+    rpc ExchangeDone(NodeId) returns (ServerInfo) {}
+}
+
+message KeyInfo {
+    enum Status {
+        EMPTY = 0;
+        SUCCESS = 1;
+        MISSING = 2;
+        DEPRECATED = 3;
+    }  
+    Status status = 1;
+}
+
+message ServerInfo {
+    enum Status {
+        WAIT = 0;
+        DONE = 1;
+        ERROR = 2;
+    }
+    Status status = 1;
+}
+
+message NodeId {
+    int32 pair_alice = 1;
+    int32 pair_bob = 2; 
+    string job_id = 3;
+}
+
+message PubKey {
+    NodeId node_id = 1;
+    bytes pub_key = 2;
+}

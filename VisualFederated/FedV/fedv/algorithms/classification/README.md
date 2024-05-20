@@ -1,0 +1,1 @@
+please download resnet pretrained model under each folder.

@@ -1,0 +1,16 @@
+engine:
+  ip: 127.0.0.1
+
+master:
+  name: machine
+  submit_port: 32001
+  local: False
+
+worker:
+  name: worker
+  port: 32002
+  port_start: 32003
+  port_end: 32100
+  max_tasks: 20
+
+    
