@@ -101,7 +101,7 @@ class flClient(fl.client.NumPyClient):
         dm_result.update(data = data)
         self.DAO.save_task_result(task_result=dm_result,component_name=ComponentName.CLASSIFY, type='loss')
 
-        if config.get('current_round') >= self.max_iter - 1:
+        if config.get('current_round') > self.max_iter - 1:
             # consider as finished
             self.DAO.update_task_status(TaskStatus.SUCCESS)
             self.DAO.finish_task_progress()

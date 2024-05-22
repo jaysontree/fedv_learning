@@ -89,6 +89,7 @@ Then configure your trian clients with sub data set
 - change num of clients
 - change dataset
 - change num of training rounds
+- change other hyper parameters
 ```python
 # server.py
 if __name__=='__main__':
@@ -123,7 +124,7 @@ if __name__=='__main__':
 from ultralytics import YOLO
 model = YOLO('PATH_TO_WEIGHTS')
 model.val(data='path_to_yaml', max_det=1) # evaluate use val dataset
-model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1) # predict
+model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1) # predict target class (used for diagnose)
 
 # evaluate swarm learning model
 import torch
