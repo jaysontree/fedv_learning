@@ -1,5 +1,5 @@
 # 2024-01-02
-path: /root/workspace/20231228/data
+path: /root/workspace/tpfdata
 train: images/train
 val: images/val
 test: images/test

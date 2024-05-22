@@ -1,4 +1,4 @@
-This repo contains a <u>Study of Swarm Learning Application in Medical Reseach</u> and an <u>Up-to-date FL/SL Learning Engine Module</u>
+This repo contains a **Study of Swarm Learning Application in Medical Reseach** and an **Up-to-date FL/SL Learning Engine Module**
 ___
 #### About Swarm Learning Study
 - Computer vision technology are developing fast and AI-assisted medical diagnose are promising. Training a reliable model usually requires a large size of dataset. Collecting medical data can be diffcult and violate privacy.
