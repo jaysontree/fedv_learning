@@ -1,6 +1,6 @@
 This repo contains
 - A **Study of Swarm Learning Application in Medical Reseach**, which implements YOLOv8 Fracture Detection with Swarm Learning/Federated Learning
-- An **Up-to-date FL/SL Learning Engine Module**
+- An **Up-to-date FL/SL Learning Engine Module**, which supports swarm learning/federated learning on Computer Vision Tasks.
 ___
 #### About Swarm Learning Study
 

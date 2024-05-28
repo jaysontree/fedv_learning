@@ -1,6 +1,5 @@
 Scripts to simulate Swarm Learning / Federated Learning Experiments.
-- Simulate a swarm learning experiment without using Privacy Computation Platform.
-- Run federated learning with YOLOv8 detection model. (Swarm Learning enables Dynamic Aggregator, which requires Privacy Compuation Platform. The training results are not affected.)
+- Simulate a swarm learning experiment without using Privacy Computation Platform. (Swarm Learning enables Dynamic Aggregator, which requires Privacy Compuation Platform. The training results are not affected.)
 
 ##### Quickstart Guide
 1. Prepare environment:
@@ -141,4 +140,4 @@ model.val(data='path_to_yaml', max_det=1)
 model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1)
 ```
 Remark:
-- when calculate ROC/Sensitivity/Specificity, we ignored detection with non-fracture results, to simplify the task as a binary classification task. This may not be rigorous. Please let us know if there is a more scientific approach to implement detetcion model in such scenarios.
+- when calculate ROC/Sensitivity/Specificity, we ignored detection with non-fracture results, to simplify the task as a binary classification task. This may not be rigorous. Please let us know if there is a more scientific approach to implement detetcion model and evaluate it for medical purpose.
