@@ -22,10 +22,10 @@ FROM 10.8.80.246/aiapp-base-yj/cuda:11.8-cudnn8-py38 AS APP
 LABEL maintainer=jaysonyue<jaysonyue@outlook.sg>
 LABEL code_encryption=false
 
-#RUN apt update && \
-#    apt install -y libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6
+RUN apt update && \
+    apt install -y libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6
 
-COPY ./requirements_gpu.txt /FedV/requirements.txt
+COPY ./requirements.txt /FedV/requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu118 &&\
     pip install -r /FedV/requirements.txt -i https://mirror.baidu.com/pypi/simple &&\
