@@ -63,7 +63,7 @@ docker build . -t {imagename} -f Deploy/Dockerfile_cpu # CPU Version
 # docker build . -t {imagename} -f Deploy/Dockerfile_gpu # GPU Version
 docker run -dit --restart=always -v {path to deploy_config.file}:/FedV/deploy_config.yml -v {path to db_config.file}:/FedV/config.properties --network=host --name FedV-Service {imagename}
 ```
-Please refer to [deploy readme](./Deploy/README.md)
+Please refer to [deploy readme](./VisualFederated/Deploy/README.md)
 
 Run Examples *TODO*
 
