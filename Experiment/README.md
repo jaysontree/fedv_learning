@@ -1,28 +1,32 @@
 Scripts to simulate Swarm Learning / Federated Learning Experiments.
+- Simulate a swarm learning experiment without using Privacy Computation Platform.
+- Run federated learning with YOLOv8 detection model. (Swarm Learning enables Dynamic Aggregator, which requires Privacy Compuation Platform. The training results are not affected.)
 
 ##### Quickstart Guide
-Run a swarm learning experiment
 1. Prepare environment:
 please refer to [requirements](../VisualFederated/requirements.txt) or use docker container.
-2. Prepare Dataset:
+2. [Prepare Dataset](#dataset-preparation):
 prepare YOLO dataset and YAML.
-3. start aggregator:
+3. start [aggregator](#configuration):
 ```bash
-# cd ./Simulation
+# you may use Tmux/Sceen to run command in sessions. or use nohup to run in background.
+# modify configuration/IP&Port accordingly 
 python server.py
 ```
 4. start key exchanger:
 ```bash
 python exchange_provider.py
 ```
-5. start training clients:
+5. start training [clients](#configuration):
 ```bash
-# server, exchange_provider, clients can run at different place/device, but the ip addr should be correctly indicated.
+# server, exchange_provider, clients can run at different place/device, 
+# but the ip addr should be correctly indicated.
 python client.py
 # python client_01.py
 # python client_02.py
 # python client_03.py
 ```
+then the training should start running.
 
 ##### dataset preparation
 How to prepare YOLO dataset
@@ -46,11 +50,11 @@ val: images/val
 test: images/test
 
 names: # LABELS of YOUR DATA
-  0: negative
-  1: positive
-  2: unknown
+  0: CLASS1
+  1: CLASS2
+  2: CLASS3
 ```
-For swarm leanring/federated learning, split your data into datasets, eg.
+For swarm leanring/federated learning, split your data into datasets for every node, eg.
 ```bash
 data_01
 ├── images
@@ -79,9 +83,9 @@ val: images/val
 test: images/test
 
 names: # LABELS of YOUR DATA
-  0: negative
-  1: positive
-  2: unknown
+  0: CLASS1
+  1: CLASS2
+  2: CLASS3
 ```
 Then configure your trian clients with sub data set
 
@@ -119,6 +123,8 @@ if __name__=='__main__':
 ```
 
 ##### evaluation
+- YOLO model file is a class which wraps checkpoint, ema checkpoint and other meta. 
+- The model file saved from Swarm Learning is a pytorch checkpoint file. it is equivalent to {YOLO model}.model. Thus you can initiate a YOLO model, and replace with your checkpoint to use YOLO api on valdiation and prediction.
 ```python
 # evaluate centralized model
 from ultralytics import YOLO
@@ -134,3 +140,5 @@ model.model = sd
 model.val(data='path_to_yaml', max_det=1)
 model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1)
 ```
+Remark:
+- when calculate ROC/Sensitivity/Specificity, we ignored detection with non-fracture results, to simplify the task as a binary classification task. This may not be rigorous. Please let us know if there is a more scientific approach to implement detetcion model in such scenarios.

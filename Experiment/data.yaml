@@ -5,5 +5,5 @@ val: images/val
 test: images/test
 
 names:
-  0: negative
-  1: positive
+  0: normal
+  1: fracture

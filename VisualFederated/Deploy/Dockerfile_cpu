@@ -28,7 +28,8 @@ RUN apt update && \
 COPY ./requirements.txt /FedV/
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install torch==2.1.2 torchvision==0.16.2 -i https://mirror.baidu.com/pypi/simple &&\
-    pip install -r /FedV/requirements.txt -i https://mirror.baidu.com/pypi/simple
+    pip install -r /FedV/requirements.txt -i https://mirror.baidu.com/pypi/simple &&\
+    pip install ultralytics==8.0.234 --no-deps
 
 COPY ./Deploy/Arial.ttf /root/.config/Ultralytics/Arial.ttf
 COPY --from=ENCRYPTOR /FedV /FedV

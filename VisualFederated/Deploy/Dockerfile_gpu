@@ -1,0 +1,40 @@
+FROM 10.8.80.246/aiapp-base/python-dev:3.9-ubuntu20 AS ENCRYPTOR
+
+COPY ./FedV /FedV
+RUN set -eux;\
+    # git clone http://10.8.80.239/yanboy/pyconcrete.git && \
+    # cd /pyconcrete && \
+    # python setup.py install && \
+    cd /FedV &&\
+    _patterns=("__pycache__" ".[!.]*" "*.log" "*test*" "tools" "static" "requirements.txt" "*.pid"); \
+        for _pattern in ${_patterns[@]}; do\
+        find . -name "$_pattern" -exec rm -r {} +; \
+    # done; \
+    # for file in $(find /FedV -name "*.py"); do \
+    #   if [ ${file##*/} != 'start_master.py' ] && [ ${file##*/} != 'start_worker.py' ]; then \
+    #     ../pyconcrete/pyconcrete-admin.py compile --source="$file" --pye; \
+    #     rm "$file"; \
+    #   fi \
+    done
+    
+FROM 10.8.80.246/aiapp-base-yj/cuda:11.8-cudnn8-py38 AS APP
+
+LABEL maintainer=jaysonyue<jaysonyue@outlook.sg>
+LABEL code_encryption=false
+
+#RUN apt update && \
+#    apt install -y libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6
+
+COPY ./requirements_gpu.txt /FedV/requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu118 &&\
+    pip install -r /FedV/requirements.txt -i https://mirror.baidu.com/pypi/simple &&\
+    pip install ultralytics==8.0.234 --no-deps
+
+COPY ./Deploy/Arial.ttf /root/.config/Ultralytics/Arial.ttf
+COPY --from=ENCRYPTOR /FedV /FedV
+
+ENV PYTHONPATH=/FedV
+WORKDIR /FedV
+RUN chmod 755 ./start.sh
+ENTRYPOINT ["bash", "start.sh"]
