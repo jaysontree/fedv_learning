@@ -32,11 +32,12 @@ The core workflow follows the parameter-server architecture.
 A process is as follows
 ```mermaid
 graph TD
-    A(((Member A))) --apply--> A1[initiate resource]
-    A1 --> A2[start secure aggreagtor/key exchanger]
-    A --submit--> A3[start training client]
+    A(((Member A))) --apply--> A1[1. initiate resource]
+    A1 --callback resource--> A
+    A1 --> A2[2. start secure aggreagtor/key exchanger]
+    A --submit--> A3[3.1 start training client]
     A -..-> B(((Member B)))
-    B --submit--> B1[start training client]
+    B --submit--> B1[3.2 start training client]
     A2 --> A4{{aggregator}}
     A3 --> A5{{train client}}
     B1 --> B2{{train client}}
