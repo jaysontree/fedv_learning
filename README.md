@@ -1,10 +1,11 @@
-This repo contains
-- A **Study of Swarm Learning Application in Medical Reseach**, which implements YOLOv8 Fracture Detection with Swarm Learning/Federated Learning
-- An **Up-to-date FL/SL Learning Engine Module**, which supports swarm learning/federated learning on Computer Vision Tasks.
+>This repo contains
+>- A **Study of Swarm Learning Application in Medical Reseach**, which implements YOLOv8 Fracture Detection with Swarm Learning/Federated Learning
+>- An **Up-to-date FL/SL Learning Engine Module**, which supports swarm learning/federated learning on Computer Vision Tasks.
 ___
 #### About Swarm Learning Study
 
-> 
+For article 
+> [Swarm learning for secure decentralized artificial intelligence in orthopaedic image analysis]()
 
 ##### Background
 - Computer vision technology are developing fast and AI-assisted medical diagnose are promising. Training a reliable model usually requires a large size of dataset. Collecting medical data can be diffcult and violate privacy.
@@ -64,8 +65,7 @@ docker run -dit --restart=always -v {path to deploy_config.file}:/FedV/deploy_co
 ```
 Please refer to [deploy readme](./Deploy/README.md)
 
-Run Examples
-TODO
+Run Examples *TODO*
 
 ##### Supported Models
 - Detection
@@ -81,6 +81,10 @@ Anyone can add models by yourself, please refer to [Flower](https://github.com/a
 Not released at current stage
 
 ### Reference Repo
-[Flower](https://github.com/adap/flower)
-[Wefe](https://github.com/tianmiantech/WeFe)
+This project is inspired by following great project:
 
+- [Ultralytics](https://github.com/ultralytics/ultralytics)
+
+- :cherry_blossom: [Flower](https://github.com/adap/flower)
+
+- [Wefe](https://github.com/tianmiantech/WeFe)
