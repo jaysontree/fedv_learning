@@ -9,6 +9,7 @@ from torchvision import transforms
 import os
 import PIL
 import numpy as np
+from sklearn.metrics import roc_curve, auc
 
 from .folder import ImageFolder
 
@@ -101,6 +102,41 @@ class resnetValidator:
     def __init__(self, test_loader):
         self.test_loader = test_loader
         self.metrics = {}
+        self.roc_stat = [None, None]
+
+    def roc(self, output, tgt):
+        # calculate roc curve
+        num_cls = output.size(1)
+        tgt_one_hot = np.zeros((tgt.size(0), num_cls))
+        for i in range(tgt.size(0)):
+            tgt_one_hot[i][tgt[i]] = 1
+
+        if self.roc_stat[0] is None:
+            self.roc_stat[0] = output.detach().numpy()
+            self.roc_stat[1] = tgt_one_hot
+        else:
+            self.roc_stat[0] = np.concatenate((self.roc_stat[0], output.detach().numpy()),0)
+            self.roc_stat[1] = np.concatenate((self.roc_stat[1], tgt_one_hot),0)
+
+    def finalize_roc(self):
+        if len(self.roc_stat[0]) == 0:
+            return None
+        x = np.linspace(0,1,1001)
+        fpr, tpr = {}, {}
+        self.roc_stat[0] = np.array(self.roc_stat[0])
+        self.roc_stat[1] = np.array(self.roc_stat[1])
+        clss = np.argwhere(self.roc_stat[1].sum(0) > 0).flatten()
+
+        for cls in clss:
+            confs = self.roc_stat[0][:,cls]
+            labels = self.roc_stat[1][:,cls]
+            fpr[cls] , tpr[cls], _ = roc_curve(labels, confs)
+        fpr['micro'], tpr['micro'], _ = roc_curve(labels.ravel(), confs.ravel())
+
+        roc_values = {k: np.interp(x, fpr[k], tpr[k]) for k in fpr}
+        return {'x_axis': x, 'y_axis': roc_values}
+
+
 
     def __call__(self, model, device='cpu'):
         with torch.no_grad():
@@ -113,6 +149,7 @@ class resnetValidator:
                 inp = inp.to(device)
                 out = model(inp)
                 _out = torch.softmax(out, 1)
+                self.roc(_out, tgt)
                 confs = torch.max(_out, 1)
                 predicts = torch.argmax(_out, 1)
                 total += tgt.size(0)
@@ -136,6 +173,7 @@ class resnetValidator:
 
         self.metrics['acc'] = acc
         self.metrics['cls_res'] = class_res
+        self.metrics['roc'] = self.finalize_roc()
         return self.metrics
 
 class resnetPredictor:

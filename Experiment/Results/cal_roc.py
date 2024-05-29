@@ -54,6 +54,14 @@ def calculate_roc(_preds: dict, _gts: dict) -> list:
     scores = [x[1] for k, x in _preds.items()]
     sort_idx = np.argsort(scores)[::-1]
 
+
+    __scores = np.array(scores)
+    __gts = np.array([y for x,y in _gts.items()])
+    
+    __fpr, __tpr, _ = roc_curve(__scores, __gts)
+    print('sklearn roc-acu: ', auc(__fpr, __tpr))
+
+
     # search conf threshold from 1 to 0
     # at the beginning conf:1 all is predicted as negative
     N = len([k for k, v in _gts.items() if v != 1])
@@ -72,7 +80,7 @@ def calculate_roc(_preds: dict, _gts: dict) -> list:
         temp_key = keys[idx]
         pred = _preds[temp_key][0]
         gt = _gts[temp_key]
-        print(conf, temp_key, pred, gt)
+        # print(conf, temp_key, pred, gt)
         if gt == pred == 1:  # true label is Positive and pred is positive
             TP += 1
             FN -= 1
@@ -94,6 +102,7 @@ def calculate_roc(_preds: dict, _gts: dict) -> list:
                        specificity, YOUDEN_INDEX, PRECISION, RECALL, pred, gt])
 
     _auc = auc(_fpr, _tpr)
+    print(_auc)
     pyplot.figure()
     pyplot.plot(_fpr, _tpr, color="orange", lw=2,
                 label=f'ROC curve (AUC={round(_auc, 2)})')
@@ -111,7 +120,7 @@ if __name__ == "__main__":
     gt_path = sys.argv[1]
     pred_path = sys.argv[2]
     res = calculate_roc(_load_pred(pred_path), _load_gt(gt_path))
-    with open('res.csv', 'w') as f:
+    with open('tmp.csv', 'w') as f:
         f.write(
             f"conf,tp,fn,fp,tn,acc,fpr,tpr,sensitivity,specificity,youden,precision, recall, pred, gt\n")
         for r in res:
