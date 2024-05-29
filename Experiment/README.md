@@ -1,9 +1,16 @@
 Scripts to simulate Swarm Learning / Federated Learning Experiments.
-- Simulate a swarm learning experiment without using Privacy Computation Platform. (Swarm Learning enables Dynamic Aggregator, which requires Privacy Compuation Platform. The training results are not affected.)
+- Simulate a swarm learning experiment without using Privacy Computation Platform. (Swarm Learning enables Dynamic Aggregator, which requires Privacy Compuation Platform. With/without dynamic aggregator does not affect training results.)
+![result](./Results/batch1_pred.jpg)
 
 ##### Quickstart Guide
+Run YOLOv8 Federated Learning:
 1. Prepare environment:
-please refer to [requirements](../VisualFederated/requirements.txt) or use docker container.
+please refer to [requirements.txt](../VisualFederated/requirements.txt) or use docker container.
+```bash
+pip install torch torchvision # match your device
+pip install -r requirements
+pip install ultralytics==8.0.234 --no-deps # newer version not verified
+```
 2. [Prepare Dataset](#dataset-preparation):
 prepare YOLO dataset and YAML.
 3. start [aggregator](#configuration):
@@ -139,5 +146,9 @@ model.model = sd
 model.val(data='path_to_yaml', max_det=1)
 model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1)
 ```
-Remark:
-- when calculate ROC/Sensitivity/Specificity, we ignored detection with non-fracture results, to simplify the task as a binary classification task. This may not be rigorous. Please let us know if there is a more scientific approach to implement detetcion model and evaluate it for medical purpose.
+### Detailed Results and Figures
+please refer to the paper.
+
+### Discussion
+- when calculate ROC/Sensitivity/Specificity, we only focus on detected fracture results, to simplify the task as a binary classification task. This may not be rigorous. Please let us know if there is a more scientific approach to implement detetcion model and evaluate it for medical purpose.
+- No bootstrap conducted due to the time cost. Running a 100-round swarm learning with 1k image per node takes about 4 hours on my device.

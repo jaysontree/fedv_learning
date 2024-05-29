@@ -4,7 +4,7 @@
 ___
 #### About Swarm Learning Study
 
-For article 
+Article 
 > [Swarm learning for secure decentralized artificial intelligence in orthopaedic image analysis]()
 
 ##### Background
@@ -14,7 +14,6 @@ For article
 This project proposed a swarm learning solution and verified the effectiveness of swarm-learning model compared with centralized model.
 ##### Scripts, Data and Results
 please see [Experiment](./Experiment/)
-
 
 ___
 #### About Engine Module 

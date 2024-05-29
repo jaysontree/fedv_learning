@@ -59,6 +59,7 @@ class flClient(fl.client.NumPyClient):
     def validate_step(self):
         metrics = self.validator(model=copy.deepcopy(self.trainer.model))
         metrics.pop('cls_res')
+        metrics.pop('roc')
         return metrics
 
     def get_parameters(self, config):
