@@ -1,6 +1,6 @@
 Scripts to simulate Swarm Learning / Federated Learning Experiments.
 - Simulate a swarm learning experiment without using Privacy Computation Platform. (Swarm Learning enables Dynamic Aggregator, which requires Privacy Compuation Platform. With/without dynamic aggregator does not affect training results.)
-![result](./Results/batch1_pred.jpg)
+![result](./Results/pred.jpg)
 
 ##### Quickstart Guide
 Run YOLOv8 Federated Learning:
