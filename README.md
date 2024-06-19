@@ -20,11 +20,11 @@ ___
 
 ##### Background/motivation of FedV
 FedV is aimed to provide swarm learning / federated learning abilities with industry-level/cutting-edge cv models in a more flexiable FL framework.
-This project is inspired by  [FedVision](https://github.com/FederatedAI/FedVision) and [Wefe](https://github.com/tianmiantech/WeFe)-VisualFL. The basic idea and a small part of code is inherited from these two projects. Although these two projects provide federated learning modules for cv tasks, they are both based on PaddleFL, which seems to be outdated and nolonger mantained. FedV(this project) uses a simple parameter-server framework([Flower]((https://github.com/adap/flower))), and supports a batch of deep learning algorithms.
+This project is inspired by  [FedVision](https://github.com/FederatedAI/FedVision) and [Wefe](https://github.com/tianmiantech/WeFe)-VisualFL. The basic idea and a small part of code is inherited from these two projects. Although these two projects provide federated learning modules for cv tasks, they are both based on PaddleFL, which seems to be outdated and nolonger mantained. FedV(this project) uses modified parameter-server framework([Flower]((https://github.com/adap/flower))), targeting to intergrate with privacy computation platform for enhanced security measures, and support a batch of deep learning algorithms.
 ##### Architecture
-FedV provides services to handle computer-vision swarm learning/federated learning tasks. It works as a plug in module for privacy computation platform. It can be deployed independently and bind with any platform node. The privacy computation platform will manage participants, collect configurations, generate dataset download url, and coordinates all participants then call API to initiate cv tasks for each participates. 
+FedV provides services to handle computer-vision swarm learning/federated learning tasks. It works as a plug in module for privacy computation platform. It can be deployed independently and bind with platform node. The privacy computation platform works as a manager and scheduler, which will manage participants, collect configurations, distribute dataset, and coordinate all participants then call FedV to initiate cv tasks for each participates. 
 ![arch](./VisualFederated/arch2.JPG)
-Master servicer handles request and convert request to local task. then submit to task queue. worker servicer is the consumer, execute process to run the task. When Database enabled, it will verify, synchronize task status/progress to the database. The results/metrics are also writen to database.
+FedV Master servicer handles request and convert request to local task. then submit to task queue. worker servicer is the consumer, execute process to run the task. When Database enabled, it will verify, synchronize task status/progress to the database. The results/metrics are also writen to database.
 ![arch](./VisualFederated/arch.JPG)
 
 ##### Learning workflow
@@ -50,7 +50,7 @@ Fedv also provides APIs to converage the whole lifecycle of trained models, such
 
 At current stage,
 - The Privacy Compuating Platform is not open sourced. Please use [Wefe](https://github.com/tianmiantech/WeFe) platform as a reference of privacy compuation platform.
-- Features/functions which works with Privacy Computation Platform, such as dynamic aggregator are not included now.
+- Features/functions which works with Privacy Computation Platform, such as dynamic aggregator are not released now.
 
 
 
