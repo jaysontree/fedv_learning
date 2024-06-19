@@ -1,5 +1,6 @@
 Scripts to simulate Swarm Learning / Federated Learning Experiments.
-- Simulate a swarm learning experiment without using Privacy Computation Platform. (Swarm Learning enables Dynamic Aggregator, which requires Privacy Compuation Platform. With/without dynamic aggregator does not affect training results.)
+- remark: These are scripts to run experiments without using Privacy Computation Platform, which is not released to public yet. (Swarm Learning uses Dynamic Aggregator, which requires Privacy Compuation Platform to enable. With/without dynamic aggregator should not affect training results.)
+- Example results:
 ![result](./Results/pred.jpg)
 
 ##### Quickstart Guide
@@ -16,7 +17,7 @@ prepare YOLO dataset and YAML.
 3. start [aggregator](#configuration):
 ```bash
 # you may use Tmux/Sceen to run command in sessions. or use nohup to run in background.
-# modify configuration/IP&Port accordingly 
+# modify configuration/IP&Port accordingly
 python server.py
 ```
 4. start key exchanger:
@@ -62,6 +63,7 @@ names: # LABELS of YOUR DATA
 ```
 For swarm leanring/federated learning, split your data into datasets for every node, eg.
 ```bash
+# Node1
 data_01
 ├── images
 │   ├── test
@@ -71,6 +73,8 @@ data_01
     ├── test
     ├── train
     └── val
+
+# Node2
 data_02
 ├── images
 │   ├── test
@@ -89,11 +93,10 @@ val: images/val
 test: images/test
 
 names: # LABELS of YOUR DATA
-  0: CLASS1
-  1: CLASS2
-  2: CLASS3
+  0: normal
+  1: fracture
 ```
-Then configure your trian clients with sub data set
+Then start your trian clients with each sub data set
 
 ##### configuration
 - change num of clients
@@ -104,7 +107,7 @@ Then configure your trian clients with sub data set
 # server.py
 if __name__=='__main__':
     # modify "min_fit_clients", "min_available_clients" to change num of clients
-    # modify "data_path" to use your own data(only used 'names' here to initiate model)
+    # modify "data_path" to use your own data(data here is used to initiate model. only number of classes and "names" here matters. no acutal image will be loaded)
     # modify "num_rounds" to change number of aggregation round.
     strategy = SecureAggWeighted_Strategy(min_fit_clients=3, min_available_clients=3, initial_parameters=server_init_params(resume=False, data_path="data.yaml"), on_fit_config_fn=fit_config, fit_metrics_aggregation_fn=metric_aggregation)
     server_config = flwr.server.ServerConfig(num_rounds=100)
@@ -129,8 +132,8 @@ if __name__=='__main__':
 ```
 
 ##### evaluation
-- YOLO model file is a class which wraps checkpoint, ema checkpoint and other meta. 
-- The model file saved from Swarm Learning is a pytorch checkpoint file. it is equivalent to {YOLO model}.model. Thus you can initiate a YOLO model, and replace with your checkpoint to use YOLO api on valdiation and prediction.
+- YOLO model file is an object which wraps checkpoint, ema checkpoint and other metadata. 
+- The model file saved from Swarm Learning script is a pytorch checkpoint file. it is equivalent to {YOLO model}.model. Thus you can initiate a YOLO model, and replace with your checkpoint to use YOLO api on valdiation and prediction.
 ```python
 # evaluate centralized model
 from ultralytics import YOLO
