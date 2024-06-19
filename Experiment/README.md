@@ -147,7 +147,7 @@ sd = torch.load('path_to_model_pt')
 model.model = sd
 # or use model.model.load_state_dict(sd.state_dict())
 model.val(data='path_to_yaml', max_det=1)
-model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1)
+model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1, save_txt=True, save_conf=True)
 ```
 ### Detailed Results and Figures
 please refer to the paper.
