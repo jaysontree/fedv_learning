@@ -139,7 +139,7 @@ if __name__=='__main__':
 from ultralytics import YOLO
 model = YOLO('PATH_TO_WEIGHTS')
 model.val(data='path_to_yaml', max_det=1) # evaluate use val dataset
-model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1) # predict target class (used for diagnose)
+model.predict(source='path_to_test_set', max_det=1, conf=1e-7, classes=1, save_txt=True, save_conf=True) # predict target class (used for diagnose)
 
 # evaluate swarm learning model
 import torch
@@ -155,3 +155,4 @@ please refer to the paper.
 ### Discussion
 - when calculate ROC/Sensitivity/Specificity, we only focus on detected fracture results, to simplify the task as a binary classification task. This may not be rigorous. Please let us know if there is a more scientific approach to implement detetcion model and evaluate it for medical purpose.
 - No bootstrap conducted due to the time cost. Running a 100-round swarm learning with 1k image per node takes about 4 hours on my device.
+- For encryption/blinding the data should be reformat to fixpoint number. However in this study, the modelparams and blind value are are kept in Float32 format, to save conversion time and reduce data transport load(DL models can be large. fixpoint number double/quadruple its size). the blind value is scaled close to gradient changes, so that during add calculation the pricision can be kept. (fp32 only has around 7 pricision digits, eg. 1.213275 x 10e-5. when adding a large number, say 1.000000 x 10e3, the result will be 1.000000 x 10e3, so the useful information is lost, and after secure aggregation the modelparam become 0).
