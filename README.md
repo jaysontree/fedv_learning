@@ -1,5 +1,5 @@
 >This repo contains
->- An experiment of Swarm Learning Application for Medical Reseach, which implements YOLOv8 Fracture Detection with Swarm Learning/Federated Learning
+>- A new blockchain-based swarm learning network for privacy-preserving artificial intelligence in evaluation of tibial plateau fracture(TPF)
 >- An **Up-to-date FL/SL Learning Engine Module**, which supports swarm learning/federated learning on Computer Vision Tasks.
 ___
 #### About Swarm Learning Study
